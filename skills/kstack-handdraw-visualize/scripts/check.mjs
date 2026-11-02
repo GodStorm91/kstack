@@ -2,9 +2,9 @@
 // Usage: node check.mjs <artifact.html> [--png out.png] [--width 1280] [--height 800] [--dpr 2]
 // Drives Chrome over CDP with Node's built-in WebSocket, so the skill needs no npm install.
 import { spawn, execFileSync } from 'node:child_process'
-import { existsSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
-import { join, resolve } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
 const args = process.argv.slice(2)
@@ -148,6 +148,7 @@ try {
 
   const { cssContentSize: c } = await page('Page.getLayoutMetrics')
   const shot = await page('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { x: 0, y: 0, width: Math.ceil(c.width), height: Math.ceil(c.height), scale: 1 } })
+  mkdirSync(dirname(png), { recursive: true })
   writeFileSync(png, Buffer.from(shot.data, 'base64'))
   ws.close()
 

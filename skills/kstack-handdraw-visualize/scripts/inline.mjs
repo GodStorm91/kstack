@@ -2,7 +2,7 @@
 // Usage: node inline.mjs <source.html> <out.html>
 // Replaces the two kstack: placeholders with the bundled CSS and runtime, then refuses
 // any remaining external resource so the output opens offline.
-import { readFileSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -37,5 +37,6 @@ if (external.length) {
   process.exit(1)
 }
 
+mkdirSync(dirname(output), { recursive: true })
 writeFileSync(output, html)
 console.log(`inline: wrote ${output} (${(Buffer.byteLength(html) / 1024).toFixed(1)} KiB)`)
