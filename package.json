@@ -1,0 +1,19 @@
+{
+  "name": "kstack",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agent skills by Khanh. First skill: kstack:handdraw-visualize (Looseleaf hand-drawn HTML visuals).",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "typecheck": "tsc --noEmit -p .",
+    "check": "node skills/kstack-handdraw-visualize/scripts/inline.mjs skills/kstack-handdraw-visualize/examples/showcase.html .cache/showcase.html && node skills/kstack-handdraw-visualize/scripts/check.mjs .cache/showcase.html --png .cache/showcase.png",
+    "test": "node --test 'tests/*.test.mjs'",
+    "install-skills": "sh tools/install.sh"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "typescript": "^5.9.3"
+  }
+}

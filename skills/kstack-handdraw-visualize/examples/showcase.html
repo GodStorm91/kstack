@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>kstack handdraw showcase</title>
+  <link rel="stylesheet" href="kstack:looseleaf.css">
+  <style>
+    .board { max-width: 1180px; margin: 0 auto; }
+    .arch { display: grid; grid-template-columns: repeat(4, 1fr); gap: 64px 120px; align-items: center; padding: 28px 12px 36px; }
+    .flow { display: grid; grid-template-columns: repeat(3, auto); gap: 72px 80px; justify-content: center; padding: 20px 12px; }
+  </style>
+</head>
+<body class="ll-desk">
+  <div class="board ll-stack" style="gap: 40px;">
+    <header class="ll-paper ll-taped">
+      <h1 class="ll-title">Checkout service, <span data-ink="underline" data-kind="wavy">on paper</span></h1>
+      <p class="ll-note">Architecture, flow, mockup, comparison, and chart in one offline file. The <mark data-ink="highlight">yellow marker</mark> shows the hot path.</p>
+    </header>
+
+    <section class="ll-paper">
+      <h2 class="ll-subtitle">Architecture</h2>
+      <div class="arch" data-ink-canvas>
+        <div id="web" class="ll-node" data-ink="box">Web app<small>React</small></div>
+        <div id="api" class="ll-node" data-ink="box" data-pen="blue">Checkout API<small>Go</small></div>
+        <div id="pay" class="ll-node" data-ink="cloud" style="background: none; padding: 22px 26px;">Stripe</div>
+        <div id="db" class="ll-node" data-ink="box">Orders DB<small>Postgres</small></div>
+        <div id="queue" class="ll-node" data-ink="dashed" style="grid-column: 2;">Events<small>SQS</small></div>
+        <div id="mail" class="ll-node" data-ink="box" style="grid-column: 4;">Mailer</div>
+        <i data-ink="arrow" data-from="web" data-to="api">POST /pay</i>
+        <i data-ink="arrow" data-from="api" data-to="pay" data-pen="redfelt">charge</i>
+        <i data-ink="arrow" data-from="api" data-to="queue"></i>
+        <i data-ink="arrow" data-from="queue" data-to="mail" data-route="elbow">order.paid</i>
+        <i data-ink="line" data-from="pay" data-to="db" data-route="elbow" data-pen="pencil"></i>
+      </div>
+    </section>
+
+    <div class="ll-grid" style="--cols: 2;">
+      <section class="ll-card">
+        <h2 class="ll-subtitle">Flow</h2>
+        <div class="flow" data-ink-canvas>
+          <div id="f1" class="ll-node" data-ink="box">Cart</div>
+          <div id="f2" class="ll-node" data-ink="box">Pay</div>
+          <div id="f3" class="ll-node" data-ink="loop">Done</div>
+          <div id="f4" class="ll-node" data-ink="box" data-pen="redfelt" style="grid-column: 2;">Retry</div>
+          <i data-ink="arrow" data-from="f1" data-to="f2"></i>
+          <i data-ink="arrow" data-from="f2" data-to="f3">ok</i>
+          <i data-ink="arrow" data-from="f2" data-to="f4" data-pen="redfelt">declined</i>
+          <i data-ink="arrow" data-from="f4" data-to="f1" data-route="elbow" data-from-port="l" data-to-port="b" data-pen="pencil">retry</i>
+        </div>
+      </section>
+
+      <section class="ll-card ll-stack">
+        <h2 class="ll-subtitle">Mockup</h2>
+        <label><span class="ll-label">Card number</span><span class="ll-field" data-ink="box" data-pen="pencil">4242 4242 4242 4242</span></label>
+        <div class="ll-row">
+          <button class="ll-btn" data-ink="fill" data-color="hi">Pay $42</button>
+          <button class="ll-btn" data-ink="box" data-pen="pencil">Cancel</button>
+          <span class="ll-stamp" data-ink="box" data-pen="redfelt">Test mode</span>
+        </div>
+      </section>
+    </div>
+
+    <div class="ll-grid" style="--cols: 3;">
+      <div class="ll-sticky ll-tilt" style="--tilt: -2deg; width: auto;">
+        <b>Option A</b><br>Sync charge<br><span data-ink="check" class="ll-icon"></span> simple<br><span data-ink="cross" class="ll-icon"></span> slow
+      </div>
+      <div class="ll-sticky ll-sticky--green ll-tilt" style="--tilt: 1.5deg; width: auto;">
+        <b data-ink="loop">Option B</b><br>Async + queue<br><span data-ink="check" class="ll-icon"></span> resilient<br><span data-ink="star" class="ll-icon"></span> pick this
+      </div>
+      <section class="ll-card">
+        <h2 class="ll-subtitle">p95 latency (ms)</h2>
+        <div class="ll-bars">
+          <div class="ll-bar" style="--v: 0.9;" data-ink="bar" data-color="tomato"></div>
+          <div class="ll-bar" style="--v: 0.55;" data-ink="bar" data-color="tangerine"></div>
+          <div class="ll-bar" style="--v: 0.3;" data-ink="bar" data-color="grass"></div>
+        </div>
+        <div class="ll-bar-label"><span>v1</span><span>v2</span><span>v3</span></div>
+      </section>
+    </div>
+  </div>
+  <script src="kstack:looseleaf-ink.js"></script>
+</body>
+</html>

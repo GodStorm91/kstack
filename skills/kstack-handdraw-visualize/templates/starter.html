@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TITLE</title>
+  <link rel="stylesheet" href="kstack:looseleaf.css">
+</head>
+<body class="ll-desk">
+  <main class="ll-paper ll-stack" style="max-width: 1100px; margin: 0 auto;">
+    <header>
+      <h1 class="ll-title"><span data-ink="underline" data-kind="wavy">TITLE</span></h1>
+      <p class="ll-note">One sentence that says what the reader should take away.</p>
+    </header>
+
+    <!-- Diagram: nodes need ids; connectors point at them and live inside the same data-ink-canvas. -->
+    <section data-ink-canvas class="ll-row" style="justify-content: space-between; padding: 24px 8px;">
+      <div id="a" class="ll-node" data-ink="box">Input<small>what comes in</small></div>
+      <div id="b" class="ll-node" data-ink="box">Step<small>what happens</small></div>
+      <div id="c" class="ll-node" data-ink="box" data-pen="blue">Output<small>what comes out</small></div>
+      <i data-ink="arrow" data-from="a" data-to="b">label</i>
+      <i data-ink="arrow" data-from="b" data-to="c"></i>
+    </section>
+  </main>
+  <script src="kstack:looseleaf-ink.js"></script>
+</body>
+</html>
