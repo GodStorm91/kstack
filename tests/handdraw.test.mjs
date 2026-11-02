@@ -2,7 +2,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { spawnSync } from 'node:child_process'
-import { mkdtempSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdtempSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
@@ -21,14 +21,16 @@ function inlineAndCheck(name, html) {
 
 const page = (body) => `<link rel="stylesheet" href="kstack:looseleaf.css"><body class="ll-desk">${body}<script src="kstack:looseleaf-ink.js"></script></body>`
 
-test('showcase example passes every check', () => {
-  const out = join(dir, 'showcase.html')
-  assert.equal(run('inline.mjs', join(skill, 'examples/showcase.html'), out).status, 0)
-  const res = run('check.mjs', out)
+test('showcase example passes every check, writing into folders that do not exist yet', () => {
+  const out = join(dir, 'new', 'showcase.html'), png = join(dir, 'shots', 'showcase.png')
+  const inl = run('inline.mjs', join(skill, 'examples/showcase.html'), out)
+  assert.equal(inl.status, 0, inl.stderr)
+  const res = run('check.mjs', out, '--png', png)
   const report = JSON.parse(res.stdout)
   assert.deepEqual(report.failures, [])
   assert.equal(res.status, 0)
   assert.ok(report.fontsLoaded.includes('Kevin Sans'))
+  assert.ok(existsSync(png), 'check.mjs wrote the PNG')
 })
 
 test('dangling connector and unknown kind fail the check', () => {

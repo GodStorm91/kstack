@@ -24,7 +24,7 @@ Git tracks the built assets, so the skill needs no build step. To rebuild them, 
 ```bash
 npm install
 npm run build       # clones Looseleaf at the pinned commit into .cache/, bundles assets
-npm run typecheck   # src/ against the upstream ink engine types
+npm run typecheck   # src/ against the upstream ink engine types; needs the .cache/ clone from build
 npm run check       # inlines examples/showcase.html and checks it in headless Chrome
 npm test            # gate regression tests: the good page passes, each kind of broken page fails
 ```
