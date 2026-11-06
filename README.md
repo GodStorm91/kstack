@@ -5,7 +5,7 @@ This repository holds agent skills for Claude Code, Codex, and omp.
 | Skill | What it does |
 |---|---|
 | `kstack:handdraw-visualize` | Renders diagrams, flows, mockups, comparison boards, and bar charts as one offline HTML file in the hand-drawn [Looseleaf](https://kevintngo.github.io/looseleaf/) style. |
-| `stageshow` | Builds faux product UI in React, as a still or a cursor demo, and films it for review. Vendored from [benjitaylor/skills](https://github.com/benjitaylor/skills/tree/main/stageshow). |
+| `kstack:stageshow` | Builds faux product UI in React, as a still or a cursor demo, and films it for review. Based on [benjitaylor/skills](https://github.com/benjitaylor/skills/tree/main/stageshow). |
 
 ## Install
 
@@ -36,14 +36,16 @@ The source layout is as follows:
 - `src/looseleaf.css` holds the `ll-*` composition classes. The build puts the upstream design tokens in front of them.
 - `tools/build.mjs` makes `assets/looseleaf-ink.js` (engine, adapter, and Kevin Sans fonts, with no React) and `assets/looseleaf.css`.
 
-### Vendored skills
+### Stageshow upstream
 
-`skills/stageshow` is a verbatim copy of [benjitaylor/skills](https://github.com/benjitaylor/skills) at the commit pinned in `tools/vendor-stageshow.sh`. Do not edit it here. To update it, change `REF` in that script and run `sh tools/vendor-stageshow.sh`. A re-run with the same `REF` changes nothing.
+`skills/kstack-stageshow` started as a copy of [benjitaylor/skills](https://github.com/benjitaylor/skills) at the commit pinned in `tools/vendor-stageshow.sh`. kstack owns it now, so edit it here.
 
-Stageshow has its own dependencies. Run `npm install` inside `skills/stageshow` before you use its playground or filming scripts. Its `README.md` describes the checks.
+To review upstream changes, run `sh tools/vendor-stageshow.sh`. The script fetches upstream into `.cache/vendor-stageshow/` and checks out the pinned `REF`. It never writes into the skill. It prints the commands that diff the kstack edits against `REF`, list the upstream changes since `REF`, and apply them with a 3-way merge. After a merge, set `REF` to the upstream commit you merged.
+
+Stageshow has its own dependencies. Run `npm install` inside `skills/kstack-stageshow` before you use its playground or filming scripts. Its `README.md` describes the checks.
 
 ## License
 
 This repository uses the MIT license. The assets include Looseleaf code, tokens, and fonts, (c) 2026 Looseleaf contributors, under the MIT license.
 
-`skills/stageshow` keeps its upstream license. Its code is MIT, (c) 2026 Benji Taylor. Its `NOTICE.md` lists the third-party artwork that the MIT license does not cover, such as the app icons in `assets/app-icons.ts`.
+`skills/kstack-stageshow` keeps its upstream license. Its code is MIT, (c) 2026 Benji Taylor. Its `NOTICE.md` lists the third-party artwork that the MIT license does not cover, such as the app icons in `assets/app-icons.ts`.

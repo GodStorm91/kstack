@@ -1,5 +1,5 @@
 ---
-name: stageshow
+name: kstack:stageshow
 description: Build faux product UI that looks like a real product, as a still illustration or an animated demo with a cursor. Browser and app windows, dashboards, phones, notifications, terminals, bento grids and cursor walkthroughs, framed, masked and cropped the way a marketing page, feature card or docs hero needs them. Use whenever someone wants a fake or mocked UI, a product demo or walkthrough animation, a hero or feature-card illustration of an app, a product shot in the style of a polished marketing site, or an animated cursor doing things in an interface, even if they never say "faux UI". React and plain CSS.
 ---
 
@@ -147,3 +147,5 @@ Copy `kit/` into the project and import from `kit/index.ts`. React, react-dom an
 ## The references
 
 `references/framing.md`: the framing rules and the layout table. `references/craft.md`: the still frame (restraint, type, spacing, icons, color, chrome). `references/motion.md`: story, loops, pace, the cursor and drags. `references/verify.md`: the checklist with a you-see / you-do table. `references/rehearse.md`: how to film, and the film lines that are never intentional.
+
+Stageshow comes from benjitaylor/skills (https://github.com/benjitaylor/skills/tree/main/stageshow), (c) 2026 Benji Taylor, under the MIT license (`LICENSE`). `NOTICE.md` lists the third-party artwork that the MIT license does not cover.
